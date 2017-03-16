@@ -3,4 +3,4 @@ git pull
 . /srv/venv/bin/activate
 python manage.py migrate
 python manage.py collectstatic --no-input
-service apache restart
+service apache2 restart

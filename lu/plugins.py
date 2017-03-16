@@ -25,15 +25,21 @@ def help(message):
 @respond_to('deploy', re.IGNORECASE)
 def deploy(message):
     message.reply('ok!, I\'m beginning with de deploy')
+    p = subprocess.Popen(['./bash_commands.sh'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    text = ''
+    for line in p.stdout.readlines():
+        text += line.decode("utf-8")
+    message.reply(text)
 
-    with open('bash_commands.sh', "r") as f:
-        for line in f:
-            p = subprocess.Popen(line, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            text = ''
-            for line in p.stdout.readlines():
-                text += line.decode("utf-8")
-            message.reply(text)
-    f.close()
+    # uncomment to exec line by line
+    # with open('bash_commands.sh', "r") as f:
+    #     for line in f:
+    #         p = subprocess.Popen(line, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    #         text = ''
+    #         for line in p.stdout.readlines():
+    #             text += line.decode("utf-8")
+    #         message.reply(text)
+    # f.close()
 
 
 @respond_to('exec (.*)')
@@ -43,3 +49,6 @@ def exec_command(message, something):
     for line in p.stdout.readlines():
         text += line.decode("utf-8")
     message.reply(text)
+
+
+import subprocess

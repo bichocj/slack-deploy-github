@@ -14,7 +14,7 @@ def hi(message):
 @respond_to('help', re.IGNORECASE)
 def help(message):
     message.reply('I going to do: ')
-    with open('bash_commands', "r") as f:
+    with open('bash_commands.sh', "r") as f:
         for line in f:
             message.reply("$ " + line)
 
@@ -26,7 +26,7 @@ def help(message):
 def deploy(message):
     message.reply('ok!, I\'m beginning with de deploy')
 
-    with open('bash_commands', "r") as f:
+    with open('bash_commands.sh', "r") as f:
         for line in f:
             p = subprocess.Popen(line, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             text = ''

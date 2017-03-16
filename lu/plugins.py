@@ -19,7 +19,7 @@ def help(message):
             message.reply("$ " + line)
 
     message.reply("write 'deploy' if you want I run the script")
-    message.reply("also you can give me your own command usin 'exec (.*)'")
+    message.reply("also you can give me your own command using 'exec (.*)'")
 
 
 @respond_to('deploy', re.IGNORECASE)

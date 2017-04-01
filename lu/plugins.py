@@ -35,9 +35,9 @@ def help(message):
 def deploy(message):
     message.reply('ok!, I\'m on that ..')
     try:
-    #     with open('lu/bash_commands.sh', "r") as f:
-    #         for line in f:
-    #             message.reply(".    $ " + line.replace('echo ', ''))
+        with open('lu/bash_commands.sh', "r") as f:
+            for line in f:
+                message.reply(".    $ " + line.replace('echo ', ''))
 
         p = subprocess.Popen(['./lu/bash_commands.sh'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         text = ''
@@ -51,9 +51,7 @@ def deploy(message):
 @respond_to('exec (.*)')
 def exec_command(message, something):
     try:
-        task = '. ' + ENV_DIR + ' &'
-        task += 'cd ' + BASE_DIR + ' &'
-        task += something
+        task = '. ' + ENV_DIR + ' ; cd ' + BASE_DIR + ' ; ' + something
 
         p = subprocess.Popen(task, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         text = ''

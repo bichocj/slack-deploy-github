@@ -16,16 +16,19 @@ def hi(message):
 
 @respond_to('help', re.IGNORECASE)
 def help(message):
-    message.reply('- If you write me "deploy", I going to do : ')
+    try:
+        message.reply('- If you write me "deploy", I going to do : ')
 
-    with open('lu/bash_commands.sh', "r") as f:
-        for line in f:
-            message.reply("    $ " + line.replace('echo ', ''))
+        with open('lu/bash_commands.sh', "r") as f:
+            for line in f:
+                message.reply("    $ " + line.replace('echo ', ''))
 
-    message.reply('- If you write me "exec your_command", I going : ')
-    message.reply('    $ cd ' + BASE_DIR)
-    message.reply('    $ ' + ENV)
-    message.reply('    $ your_command')
+        message.reply('- If you write me "exec your_command", I going : ')
+        message.reply('    $ cd ' + BASE_DIR)
+        message.reply('    $ ' + ENV)
+        message.reply('    $ your_command')
+    except Exception as e:
+        message.reply(e)
 
 
 @respond_to('deploy', re.IGNORECASE)

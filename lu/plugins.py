@@ -18,7 +18,7 @@ def hi(message):
 def help(message):
     message.reply('- If you write me "deploy", I going to do : ')
 
-    with open('bash_commands.sh', "r") as f:
+    with open('lu/bash_commands.sh', "r") as f:
         for line in f:
             message.reply("    $ " + line.replace('echo ', ''))
 

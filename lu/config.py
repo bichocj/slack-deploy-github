@@ -1,2 +1,2 @@
-BASE_DIR = 'echo "cd /srv/www/eventus/src/"'
-ENV = '. /srv/venv/bin/activate'
+BASE_DIR = '/srv/www/eventus/src/'
+ENV_DIR = '/srv/venv/bin/activate'

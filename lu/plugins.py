@@ -5,13 +5,13 @@ import subprocess
 from slackbot.bot import listen_to
 from slackbot.bot import respond_to
 
-from lu.config import BASE_DIR, ENV
+from lu.config import BASE_DIR, , ENV_DIR
 
 
 @respond_to('hi', re.IGNORECASE)
 def hi(message):
-    message.reply('hi!')
     message.react('+1')
+    message.reply('hi!')
 
 
 @respond_to('help', re.IGNORECASE)
@@ -21,12 +21,12 @@ def help(message):
 
         with open('lu/bash_commands.sh', "r") as f:
             for line in f:
-                message.reply("    $ " + line.replace('echo ', ''))
+                message.reply(".    $ " + line.replace('echo ', ''))
 
         message.reply('- If you write me "exec your_command", I going : ')
-        message.reply('    $ cd ' + BASE_DIR)
-        message.reply('    $ ' + ENV)
-        message.reply('    $ your_command')
+        message.reply('.    $ cd ' + BASE_DIR)
+        message.reply('.    $ ' + ENV)
+        message.reply('.    $ your_command')
     except Exception as e:
         message.reply(e)
 
@@ -35,6 +35,10 @@ def help(message):
 def deploy(message):
     message.reply('ok!, I\'m on that ..')
     try:
+    #     with open('lu/bash_commands.sh', "r") as f:
+    #         for line in f:
+    #             message.reply(".    $ " + line.replace('echo ', ''))
+
         p = subprocess.Popen(['./lu/bash_commands.sh'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         text = ''
         for line in p.stdout.readlines():
@@ -47,7 +51,7 @@ def deploy(message):
 @respond_to('exec (.*)')
 def exec_command(message, something):
     try:
-        task = 'cd ' + ENV + ' &'
+        task = '. ' + ENV_DIR + ' &'
         task += 'cd ' + BASE_DIR + ' &'
         task += something
 

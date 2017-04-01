@@ -37,13 +37,10 @@ def deploy(message):
     try:
         with open('lu/bash_commands.sh', "r") as f:
             for line in f:
-                message.reply(".    $ " + line.replace('echo ', ''))
+                task = '. ' + ENV_DIR + ' ; cd ' + BASE_DIR + ' ; ' + line
+                message.reply('.    $ ' + line)
+                p = subprocess.Popen([task], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
-        p = subprocess.Popen(['./lu/bash_commands.sh'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        text = ''
-        for line in p.stdout.readlines():
-            line.decode("utf-8")
-            message.reply(text)
     except Exception as e:
         message.reply(e)
 

@@ -5,7 +5,7 @@ import subprocess
 from slackbot.bot import listen_to
 from slackbot.bot import respond_to
 
-from lu.config import BASE_DIR, , ENV_DIR
+from lu.config import BASE_DIR, ENV_DIR
 
 
 @respond_to('hi', re.IGNORECASE)

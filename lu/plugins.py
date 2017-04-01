@@ -27,8 +27,6 @@ def help(message):
     message.reply('    $ ' + ENV)
     message.reply('    $ your_command')
 
-    message.reply('- If you write me "update lu, I going to update myself')
-
 
 @respond_to('deploy', re.IGNORECASE)
 def deploy(message):
@@ -57,8 +55,3 @@ def exec_command(message, something):
             message.reply(text)
     except Exception as e:
         message.reply(e)
-
-
-@respond_to('update lu')
-def exec_command(message, something):
-    p = subprocess.Popen(['git pull'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

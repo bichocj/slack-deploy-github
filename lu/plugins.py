@@ -25,7 +25,7 @@ def help(message):
 
         message.reply('- If you write me "exec your_command", I going : ')
         message.reply('.    $ cd ' + BASE_DIR)
-        message.reply('.    $ ' + ENV)
+        message.reply('.    $ . ' + ENV_DIR)
         message.reply('.    $ your_command')
     except Exception as e:
         message.reply(e)

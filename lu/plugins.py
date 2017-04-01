@@ -37,26 +37,22 @@ def deploy(message):
     try:
         with open('lu/bash_commands.sh', "r") as f:
             for line in f:
-                task = '. ' + ENV_DIR + ' ; cd ' + BASE_DIR + ' ; ' + line
-
-                message.reply('_    $ '+line)
-                p = subprocess.Popen([task], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                for line in p.stdout.readlines():
-                    message.reply('_        $ '+line.decode("utf-8"))
-
+                exec_order_and_reply_it(line, message)
     except Exception as e:
         message.reply(e)
 
 
 @respond_to('exec (.*)')
-def exec_command(message, something):
+def exec_command(message, line):
     try:
-        task = '. ' + ENV_DIR + ' ; cd ' + BASE_DIR + ' ; ' + something
-
-        p = subprocess.Popen(task, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        text = ''
-        for line in p.stdout.readlines():
-            text = line.decode("utf-8")
-            message.reply(text)
+        exec_order_and_reply_it(line, message)
     except Exception as e:
         message.reply(e)
+
+
+def exec_order_and_reply_it(line, message):
+    task = '. ' + ENV_DIR + ' ; cd ' + BASE_DIR + ' ; ' + line
+    message.reply('_    $ ' + line)
+    p = subprocess.Popen(task, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    for out in p.stdout.readlines():
+        message.reply('_        $ ' + out.decode("utf-8"))

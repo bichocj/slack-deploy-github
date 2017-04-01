@@ -39,7 +39,7 @@ def deploy(message):
             for line in f:
                 task = '. ' + ENV_DIR + ' ; cd ' + BASE_DIR + ' ; ' + line
 
-                message.reply('_    $ '+task)
+                message.reply('_    $ '+line)
                 p = subprocess.Popen([task], shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 for line in p.stdout.readlines():
                     message.reply('_        $ '+line.decode("utf-8"))

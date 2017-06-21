@@ -1,11 +1,9 @@
 import re
 import subprocess
 
-import subprocess
-from slackbot.bot import listen_to
 from slackbot.bot import respond_to
 
-from lu.config import BASE_DIR, ENV_DIR
+from lu.config import BASE_DIR, ENV_DIR, GO_SERVICE_COMMAND
 
 
 @respond_to('hi', re.IGNORECASE)
@@ -23,6 +21,8 @@ def help(message):
             for line in f:
                 message.reply("_    $ " + line.replace('echo ', ''))
 
+        message.reply('- If you write me "up you_service", I going start the service (go only for now) ')
+
         message.reply('- If you write me "exec your_command", I going : ')
         message.reply('_    $ . ' + ENV_DIR)
         message.reply('_    $ cd ' + BASE_DIR)
@@ -37,7 +37,18 @@ def deploy(message):
     try:
         with open('lu/bash_commands.sh', "r") as f:
             for line in f:
-                exec_order_and_reply_it(line, message)
+                if not exec_order_and_reply_it(line, message):
+                    Exception('>> There is an error with the last command')
+                    break
+    except Exception as e:
+        message.reply(e)
+
+
+@respond_to('up (.*)', re.IGNORECASE)
+def up_service(message, service):
+    try:
+        if service is 'go':
+            exec_order_and_reply_it(GO_SERVICE_COMMAND, message)
     except Exception as e:
         message.reply(e)
 
@@ -55,4 +66,8 @@ def exec_order_and_reply_it(line, message):
     message.reply('_    $ ' + line)
     p = subprocess.Popen(task, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     for out in p.stdout.readlines():
-        message.reply('_        $ ' + out.decode("utf-8"))
+        decode = out.decode("utf-8")
+        message.reply('_        $ ' + decode)
+        if decode in ['error', 'fail']:
+            return False
+    return True

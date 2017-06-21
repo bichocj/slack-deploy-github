@@ -49,6 +49,7 @@ def up_service(message, line):
     try:
         if line is 'go':
             exec_order_and_reply_it(GO_SERVICE_COMMAND, message)
+            message.reply('_        $ service ' + line + ' is up')
     except Exception as e:
         message.reply(e)
 

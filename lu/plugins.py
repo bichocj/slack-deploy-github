@@ -44,10 +44,10 @@ def deploy(message):
         message.reply(e)
 
 
-@respond_to('up (.*)', re.IGNORECASE)
-def up_service(message, service):
+@respond_to('up (.*)')
+def up_service(message, line):
     try:
-        if service is 'go':
+        if line is 'go':
             exec_order_and_reply_it(GO_SERVICE_COMMAND, message)
     except Exception as e:
         message.reply(e)
